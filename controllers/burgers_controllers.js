@@ -29,13 +29,27 @@ router.post('/burger/create', function (request, result) {
 });
 
 router.put('/burger/update/:id', function (request, result) {
-	var condition = 'id = ' + request.params.id;
-
-	console.log('condition', condition);
-
-	burger.update("burgers", { devoured: request.body.devoured }, condition, function () {
-		result.redirect('/burger');
-	});
+	models.Burger.update({
+		devoured: true
+	},
+	{
+		where: {id : request.params.id}
+	})
+	.then(function(){
+		result.redirect("/burger");
+	})
 });
+
+
+
+
+// 	var condition = 'id = ' + request.params.id;
+
+// 	console.log('condition', condition);
+
+// 	burger.update("burgers", { devoured: request.body.devoured }, condition, function () {
+// 		result.redirect('/burger');
+// 	});
+// });
 
 module.exports = router;
